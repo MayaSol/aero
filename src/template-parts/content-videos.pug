@@ -1,0 +1,20 @@
+:php
+  /**
+  * Template part for displaying page content in tours.php
+  * Для отображения виртуальных туров в общем списке
+  *
+  * @link https://developer.wordpress.org/themes/basics/template-hierarchy/
+  *
+  * @package aero
+  */
+
+|<article id="post-<?php the_ID(); ?>" <?php post_class('videos__item'); ?>>
+
+.videos__preview
+  h3.videos__caption
+    :php
+      the_title();
+  :php
+    the_content();
+
+|</article>

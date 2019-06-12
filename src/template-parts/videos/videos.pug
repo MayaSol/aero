@@ -1,0 +1,56 @@
+:php
+  /**
+   * Template part for displaying 'Videos' block
+   *
+   * @package aero
+   *
+   */
+
+  $video_tax_condition = '';
+  $video_tax_condition = get_query_var('video_tax_condition');
+  write_log('$video_tax_condition: ');
+  write_log($video_tax_condition);
+
+  $args = [
+    'post_type' => 'aero_video',
+    'post_status' => 'published',
+    'orderby' => 'menu_order',
+    'order' => 'ASC',
+    'tax_query' => [$video_tax_condition]
+    ];
+
+
+  $post_name_in = '';
+  $post_name_in = get_query_var('video_post_name_in');
+
+  if ($post_name_in !== '') {
+
+    $args["post_name__in"] = $post_name_in;
+    //$post_name_in = ["rus-sever-2018"];
+
+  }
+
+
+
+  $the_query = new WP_Query( $args );
+
+  if ( $the_query->have_posts() ) :
+
+include ../../pug/mixins.pug
+
+section.videos
+  :php
+    $postType = get_post_type_object($args['post_type']);
+    $videosTitle = $postType ? $postType->labels->name : '';
+  +or('<h2 class="videos__title"><?php echo $videosTitle ?></h2>')
+  .videos__list
+    :php
+      /* Start the Loop */
+      while ( $the_query->have_posts() ) : $the_query->the_post();
+
+        get_template_part( 'template-parts/content', 'videos' );
+
+      endwhile;
+|
+|
+<?php endif; ?>

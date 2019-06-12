@@ -1,0 +1,38 @@
+:php
+  /**
+   * Template part for displaying 'Tours' block
+   *
+   * @package aero
+   *
+   */
+
+  $args = [
+    'post_type' => 'aero_tour',
+    'post_status' => 'published',
+    'orderby' => 'menu_order',
+    'order' => 'ASC',
+    'tours_taxonomy' => 'regular'
+  ];
+
+  $the_query = new WP_Query( $args );
+
+  if ( $the_query->have_posts() ) :
+
+include ../../pug/mixins.pug
+
+section.tours
+  :php
+    $postType = get_post_type_object($args['post_type']);
+    $toursTitle = $postType ? $postType->labels->name : '';
+  +or('<h2 class="tours__title"><?php echo $toursTitle ?></h2>')
+  .tours__list
+    :php
+      /* Start the Loop */
+      while ( $the_query->have_posts() ) : $the_query->the_post();
+
+        get_template_part( 'template-parts/content', 'tour' );
+
+      endwhile;
+|
+|
+<?php endif; ?>

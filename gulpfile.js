@@ -84,8 +84,7 @@ let postCssPlugins = [
 ];
 
 //
-  const pagesFilter = filter('**/pages/*.*',{restore:true});
-  const styleTitle = 'Theme Name: default \n Theme URI: https://github.com/MayaSol/wp-jade-start \n Author: MayaSol \n Author URI: https://github.com/MayaSol \n Description: Description \n Version: 1.0.0';
+  const styleTitle = 'Theme Name: aero \n Theme URI: https://github.com/MayaSol/aero \n Author: MayaSol \n Author URI: https://github.com/MayaSol \n Description: Description \n Version: 1.0.0';
 // License: GNU General Public License v2 or later
 // License URI: LICENSE
 // Text Domain: aero
@@ -107,6 +106,7 @@ function compilePug() {
   const fileList = [
     `${dir.src}pages/**/*.pug`
   ];
+  const pagesFilter = filter('**/pages/**/*.*',{restore:true});
   console.log('compilePug');
   if(!buildLibrary) fileList.push(`!${dir.src}pages/blocks-demo.pug`);
   return src(fileList)
@@ -123,15 +123,16 @@ function compilePug() {
     .pipe(replace(/^( *)(<.+?>)(<script>)([\s\S]*)(<\/script>)/gm, '$1$2\n$1$3\n$4\n$1$5\n'))
     .pipe(replace(/^( *)(<.+?>)(<script\s+src.+>)(?:[\s\S]*)(<\/script>)/gm, '$1$2\n$1$3$4'))
     .pipe(through2.obj(getClassesToBlocksList))
+    .pipe(filter('**/pages/template-parts/*.*',{restore:true}))
+    .pipe(debug({title: 'parts:', showFiles: 'true'}))
+    .pipe(rename({dirname: '.', extname: '.php'}))
+    .pipe(dest(dir.build + '/template-parts/'))
     .pipe(pagesFilter)
     .pipe(debug({title: 'filter:', showFiles: 'true'}))
     .pipe(rename({dirname: '.', extname: '.php'}))
-    .pipe(dest(dir.build))
-    .pipe(pagesFilter.restore)
-    .pipe(filter('**/pages/template-parts/*.*',{restore:true}))
-//    .pipe(debug({title: 'parts:', showFiles: 'true'}))
-    .pipe(rename({dirname: '.', extname: '.php'}))
-    .pipe(dest(dir.build + '/template-parts/'));
+    .pipe(dest(dir.build));
+//    .pipe(pagesFilter.restore)
+
 
 }
 exports.compilePug = compilePug;
@@ -139,9 +140,10 @@ exports.compilePug = compilePug;
 
 function compilePugFast() {
   const fileList = [
-    `${dir.src}pages/**/*.pug`
+    `${dir.src}pages/**/*.pug`,
+    `${dir.src}template-parts/**/*.pug`,
   ];
-  console.log('compilePugFast');
+  const pagesFilter = filter('**/pages/**/*.*',{restore:true});
   if(!buildLibrary) fileList.push(`!${dir.src}pages/blocks-demo.pug`);
   return src(fileList, { since: lastRun(compilePugFast) })
     .pipe(plumber({
@@ -157,17 +159,16 @@ function compilePugFast() {
     .pipe(replace(/^( *)(<.+?>)(<script>)([\s\S]*)(<\/script>)/gm, '$1$2\n$1$3\n$4\n$1$5\n'))
     .pipe(replace(/^( *)(<.+?>)(<script\s+src.+>)(?:[\s\S]*)(<\/script>)/gm, '$1$2\n$1$3$4'))
     .pipe(through2.obj(getClassesToBlocksList))
-    //.pipe(debug({showFiles: 'true'}))
-    .pipe(pagesFilter)
-  //  .pipe(debug({title: 'filter:', showFiles: 'true'}))
+    .pipe(debug({showFiles: 'true'}))
+     .pipe(pagesFilter)
+     .pipe(debug({title: 'filter:', showFiles: 'true'}))
     .pipe(rename({dirname: '.', extname: '.php'}))
     .pipe(dest(dir.build))
-    .pipe(pagesFilter.restore)
-    .pipe(filter('**/pages/template-parts/*.*',{restore:true}))
-//    .pipe(debug({title: 'parts:', showFiles: 'true'}))
-    .pipe(rename({dirname: '.', extname: '.php'}))
-    .pipe(dest(dir.build + '/template-parts/'));
-
+     .pipe(pagesFilter.restore)
+     .pipe(filter('**/template-parts/**/*.*',{restore:true}))
+     .pipe(debug({title: 'parts:', showFiles: 'true'}))
+     .pipe(rename({dirname: '.', extname: '.php'}))
+     .pipe(dest(dir.build + '/template-parts/'));
 }
 exports.compilePugFast = compilePugFast;
 
@@ -286,12 +287,10 @@ function writeSassImportsFile(cb) {
     //let title = `/*!*${styleTitle}\n*/`;
     //let styleImports = title;
     let msg = `\n/*!*${doNotEditMsg.replace(/\n /gm,'\n * ').replace(/\n\n$/,'\n */\n\n')}`;
-    console.log('msg: ' + msg);
     let styleImports = msg;
     newScssImportsList.forEach(function(src) {
       styleImports += `@import "${src}";\n`;
     });
-    console.log('styleImports: ' + styleImports);
     styleImports += msg;
     fs.writeFileSync(`${dir.src}scss/style.scss`, styleImports);
     console.log('---------- Write new style.scss');
@@ -423,7 +422,8 @@ function reload(done) {
 function deployRemote(cb) {
   let src = `**/*`;
   console.log(src);
-  let dest = '/var/www/wp-jade-start/wp-content/themes/default/';
+  let dest = `${dir.remote}`;
+  console.log(dest);
   cpy(src, dest,{parents: 'true', cwd: `${dir.build}`});
   cb();
 }
