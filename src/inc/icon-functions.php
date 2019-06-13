@@ -12,14 +12,19 @@
  */
 function aero_include_svg_icons() {
 	// Define SVG sprite file.
-	$svg_icons = get_parent_theme_file_path( '/images/svg-icons.svg' );
+	$svg_icons = get_parent_theme_file_path( '/img/svg-icons.svg' );
 
 //	write_log($svg_icons);
 
 	// If it exists, include it.
 	if ( file_exists( $svg_icons ) ) {
+    write_log('svg_icons_exists');
 		require_once( $svg_icons );
 	}
+  else {
+    write_log('svg_icons_NOT_exists');
+  }
+
 }
 add_action( 'wp_footer', 'aero_include_svg_icons', 9999 );
 

@@ -9,9 +9,9 @@ head
   link(rel='profile', href='http://gmpg.org/xfn/11')
   link(rel='stylesheet', href!="<?php get_bloginfo('stylesheet_directory'); ?>/style.css?v=#{version}", type='text/css')
   link(rel="pingback", href!="<?php bloginfo( 'pingback_url' ); ?>")
-:php wp_head()
+  :php wp_head()
 
 | <body <?php body_class(); ?>>
 header.site-header
   h1 NTH-start-project
-  //+main-menu('class1, class3')
+  +main-menu('class1, class3')

@@ -1,0 +1,6 @@
+.videos {
+
+  &__title {
+    @include section__title;
+  }
+}

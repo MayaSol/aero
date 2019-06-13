@@ -1,0 +1,112 @@
+// Clear the float on any element.
+clearfix()
+	&:after
+		display table
+		clear both
+		content ''
+
+container()
+	width $container-mobile
+	margin-right auto
+	margin-left auto
+
+	@media ({$tablet-widths})
+		width $container-tablet
+
+	@media ({$desktop-widths})
+		width $container-desktop
+
+
+// Drop styles for button element
+btn()
+	display inline-block
+
+	font-weight 400
+
+	cursor pointer
+	user-select none
+	text-align center
+	vertical-align middle
+	white-space word-wrap
+	text-decoration none
+	text-transform uppercase
+
+	background-color transparent
+	border none
+	box-shadow none
+
+	/*	@include transition($btn-transition)*/
+
+	//&hover and focus styles
+	&:hover,
+	&:focus,
+	&.focus
+		text-decoration none
+
+		outline thin dotted
+		box-shadow none
+	//	box-shadow 1px 1px 0 rgba(125, 125, 125, 0.75)
+
+	// Disabled comes first so active can properly restyle
+	&.disabled,
+	&:disabled
+		opacity 0.65
+		box-shadow none
+
+	 &:active,
+	 &.active
+		 background-image none
+		 box-shadow none
+	//	 box-shadow inset 0 1px 4px rgba(125, 125, 125, 0.75)
+
+
+//Заголовок секции
+section__title()
+	margin 0
+	color $darker-grey
+	text-transform uppercase
+	a,
+	a:visited,
+	a:active
+		color $darker-grey
+
+// Fix no working `-webkit-text-size-adjust: 100%;` in Android.
+fix-text-size-adjust()
+	background-image linear-gradient(transparent, transparent)
+
+// Set element size
+size($width, $height = $width)
+	width $width
+	height $height
+
+// Set margin on left & right
+margin-x($margin)
+	margin-left $margin
+	margin-right $margin
+
+// Set margin on top & bottom
+margin-y($margin)
+	margin-top $margin
+	margin-bottom $margin
+
+// Set pading on left & right
+padding-x($padding)
+	padding-left $padding
+	padding-right $padding
+
+// Set padding on top & bottom
+padding-y($padding)
+	padding-top $padding
+	padding-bottom $padding
+
+// Set one static retina image
+retinaBackground($image, $ext = 'png') {
+	background-image url('../images/' + $image + '.' + $ext)
+
+	@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+		background-image url('../images/' + $image + '@2x.' + $ext)
+	}
+}
+
+
+

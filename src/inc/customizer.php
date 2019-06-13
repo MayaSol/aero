@@ -126,22 +126,22 @@ function wrap_oembed_dataparse($return, $data, $url) {
 add_filter( 'oembed_dataparse', 'wrap_oembed_dataparse', 99, 4 );
 
 
-/* Filters 'embed_oembed_discover' and  'oembed_ttl' to clear oEmbed post-meta cache
+// Filters 'embed_oembed_discover' and  'oembed_ttl' to clear oEmbed post-meta cache
+// Если 'oembed_dataparse' не срабатывает, то надо однократно очистить oEmbed post-meta cache
 
-add_filter( 'oembed_ttl', function($ttl) {
-	  $GLOBALS['wp_embed']->usecache = 0;
-            $ttl = 0;
-            // House-cleanoing
-            do_action( 'wpse_do_cleanup' );
-	return $ttl;
-});
+// add_filter( 'oembed_ttl', function($ttl) {
+// 	  $GLOBALS['wp_embed']->usecache = 0;
+//             $ttl = 0;
+//             // House-cleanoing
+//             do_action( 'wpse_do_cleanup' );
+// 	return $ttl;
+// });
 
-add_filter( 'embed_oembed_discover', function( $discover )
-{
-    if( 1 === did_action( 'wpse_do_cleanup' ) )
-        $GLOBALS['wp_embed']->usecache = 1;
-    return $discover;
-} );
+// add_filter( 'embed_oembed_discover', function( $discover )
+// {
+//     if( 1 === did_action( 'wpse_do_cleanup' ) )
+//         $GLOBALS['wp_embed']->usecache = 1;
+//     return $discover;
+// } );
 
-);
-*/
+

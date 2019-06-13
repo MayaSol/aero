@@ -6,7 +6,26 @@ mixin or(text, mods)
   //-   text    {string} - текст
   //-   mods    {string} - список модификаторов
   //- Вызов:
-        +or('Текст', 'some-mod')
+      +or('Текст', 'some-mod')
+  //- Использование с php
+      --------------------------------------
+      Вызов:
+        +or('<?php the_title("<h1 class=\'entry-title\'>","</h1>"); ?>')
+      Результат:
+        <div class="or">
+          <div class="or__inner">
+            <?php the_title("<h1 class='entry-title'>","</h1>"); ?>
+          </div>
+        </div>
+      ---------------------------------------
+      Вызов:
+        +or('<h2 class="tours__title"><?php echo $toursTitle ?></h2>')
+      Результат:
+        <div class="or">
+          <div class="or__inner">
+            <h2 class="tours__title"><?php echo $toursTitle ?></h2>
+          </div>
+        </div>
 
   -
     // список модификаторов

@@ -1,37 +1,51 @@
-.tours
-	&__title
-		margin 0
-		color $darker-grey
-		text-transform uppercase
+.tours {
+	&__title {
+		margin: 0;
+		color: $darker-grey;
+		text-transform: uppercase;
+  }
 		a,
 		a:visited,
-		a:active
-			color $darker-grey
-	&__item
-		margin 0 auto 20px
-	&__preview
-		a
-			display inline-block
-			font-size 0
-		p
-			margin-bottom 20px
-			line-height 0
-			text-align center
-		img
-			margin 0 auto
-	.or
-		margin-bottom 30px
-	&__caption
-		margin 4px 10px
-		text-align center
-		font-family $font-family
-		font-size $font-size
-		a, a:visited, a:active
-			font-size $font-size
-			color $grey
+		a:active {
+			color: $darker-grey;
+    }
+	&__item {
+		margin: 0 auto 20px;
+  }
+	&__preview {
+		a {
+			display: inline-block;
+			font-size: 0;
+    }
+		p {
+			margin-bottom: 20px;
+			line-height: 0;
+			text-align: center;
+    }
+		img {
+			margin: 0 auto;
+    }
+  }
+	.or {
+		margin-bottom: 30px;
+  }
+	&__caption {
+		margin: 4px 10px;
+		text-align: center;
+		font-family: $font-family;
+		font-size: $font-size;
+		a, a:visited, a:active {
+			font-size: $font-size;
+			color: $grey;
+    }
+   }
+}
 
-@media ({$tablet-widths})
-	.tours
-		&__item
-			display inline-block
-			width 130px
+@media #{$tablet-widths} {
+	.tours {
+		&__item {
+			display: inline-block;
+			width: 130px;
+    }
+  }
+}

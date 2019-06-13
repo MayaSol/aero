@@ -279,6 +279,13 @@ function writeSassImportsFile(cb) {
     if (newScssImportsList.indexOf(url) > -1) return;
     newScssImportsList.push(url);
   });
+  let allTemplatesWithScssFiles = getDirectories('scss','src/template-parts/');
+  allTemplatesWithScssFiles.forEach(function(templateWithScssFile){
+    let url = `src/template-parts/${templateWithScssFile}/${templateWithScssFile}.scss`;
+    if (newScssImportsList.indexOf(url) > -1) return;
+    newScssImportsList.push(url);
+  });
+
   nth.config.addStyleAfter.forEach(function(src) {
     newScssImportsList.push(src);
   });
@@ -632,8 +639,8 @@ function fileExist(filepath){
  * @param  {string} ext    Расширение файлов, которое проверяется
  * @return {array}         Массив из имён блоков
  */
-function getDirectories(ext) {
-  let source = dir.blocks;
+function getDirectories(ext, source = dir.blocks) {
+  // let source = dir.blocks;
   let res = fs.readdirSync(source)
     .filter(item => fs.lstatSync(source + item).isDirectory())
     .filter(item => fileExist(source + item + '/' + item + '.' + ext));

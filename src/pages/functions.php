@@ -122,6 +122,7 @@ add_action( 'widgets_init', 'aero_widgets_init' );
  */
 function aero_scripts() {
     wp_enqueue_style( 'aero-style', get_stylesheet_uri() );
+    wp_enqueue_script( 'aero-bundle', get_theme_file_uri( '/js/bundle.js' ), array(), '1.0', true );
 
 /*Inserted automatically by gulp (gulp copy:js) Start*/
 /*SCRIPTS*/

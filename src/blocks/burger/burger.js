@@ -1,23 +1,36 @@
-/* global document */
+(function(){
+document.addEventListener('DOMContentLoaded', function () {
 
-const ready = require('../../js/utils/documentReady.js');
-
-ready(function(){
-
-  var burgers = document.querySelectorAll('.burger');
-
-  for (var i = 0; i < burgers.length; i++) {
-    var burger = burgers[i];
-    burger.addEventListener('click', showBurgerTarget);
+  function $$(selector, context) {
+    context = context || document;
+    const elements = context.querySelectorAll(selector);
+    return Array.prototype.slice.call(elements);
   }
 
   function showBurgerTarget() {
-    var targetId = this.getAttribute('data-target-id');
-    var targetClassToggle = this.getAttribute('data-target-class-toggle');
+    console.log('Show Burger Target');
+    console.log(this);
+    const targetId = this.getAttribute('data-target-id');
+    const targetClassToggle = this.getAttribute('data-target-class-toggle');
+    const ariaHidden = this.getAttribute('aria-expanded');
     if (targetId && targetClassToggle) {
+      if (ariaHidden === 'true') {
+        this.setAttribute('aria-expanded', 'false');
+      }
+      else if (ariaHidden === 'false') {
+        this.setAttribute('aria-expanded', 'true');
+      }
       this.classList.toggle('burger--close');
       document.getElementById(targetId).classList.toggle(targetClassToggle);
     }
   }
 
+  const burgers = $$('.burger');
+
+  for (let i = 0; i < burgers.length; i++) {
+    let burger = burgers[i];
+    burger.addEventListener('click', showBurgerTarget);
+  }
+
 });
+})();

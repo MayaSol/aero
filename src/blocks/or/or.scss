@@ -1,6 +1,6 @@
 // В этом файле должны быть стили для БЭМ-блока or, его элементов,
 // модификаторов, псевдоселекторов, псевдоэлементов, @media-условий...
-// Очередность: http://nicothin.github.io/idiomatic-pre-CSS/#priority
+// Очередность http//nicothin.github.io/idiomatic-pre-CSS/#priority
 
 .or {
   display: flex;
@@ -11,13 +11,27 @@
     content: '';
     flex-grow: 1;
     height: 1px;
-    background-color: $gray-light;
+    background-color: $light-grey;
   }
 
   &__inner {
-    padding-left: 0.5rem;
+    margin: 0;
     padding-right: 0.5rem;
-    font-size: $font-size-sm;
-    color: $gray-light;
+    padding-left: 0.5rem;
+  }
+
+  h1 {
+    margin: 3rem 0;
+  }
+
+  h2,
+  h3 {
+    margin: 1.5rem 0;
+  }
+
+  h4,
+  h5,
+  h6 {
+    margin: 1rem 0;
   }
 }

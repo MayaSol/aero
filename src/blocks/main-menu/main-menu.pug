@@ -1,0 +1,30 @@
+mixin main-menu(menuMods)
+
+  //- Принимает:
+  //-    menuMods - список модификаторов
+  //- Вызов:
+    -
+    var menuMods = 'class1, class2';
+    +main-menu(menuMods)
+
+  -
+    var menuClass = '';
+    if(typeof(menuMods) !== 'undefined' && menuMods) {
+      var modsList = menuMods.split(',');
+      for (var i = 0; i < modsList.length; i++) {
+      menuClass = menuClass + ' main-menu--' + modsList[i].trim();
+      }
+    }
+
+  nav.main-menu(class=menuClass)&attributes(attributes)
+    .main-menu__top
+      .main-menu__top-inner
+        +site-title()
+        +burger('Меню', 'primary-menu', 'main-menu__items--open')(aria-controls='top-menu', aria-expanded='false')
+    :php
+      wp_nav_menu( array(
+        'theme_location' => 'main-menu-top',
+        'menu_id'    => 'primary-menu',
+        'menu_class'  => 'main-menu__items',
+        'container' => '')
+      );

@@ -2,25 +2,32 @@
 // модификаторов, псевдоселекторов, псевдоэлементов, @media-условий...
 // Очередность: http://nicothin.github.io/idiomatic-pre-CSS/#priority
 
+$toggler-part-height: 3px;
+$toggler-part-bg-color: #000;
+
+$transition-time: 0.3s;
+
 .burger {
+
   display: inline-block;
   position: relative;
   z-index: 1;
+  margin-left: auto;
   width: 30px;
   border: none;
   padding: 0;
   line-height: 30px;
-  background: transparent;
-  user-select: none;
   cursor: pointer;
+  user-select: none;
+  background: transparent;
 
-  > span { // stylelint-disable-line  selector-combinator-blacklist
+  > span {
     display: inline-block;
     position: relative;
     width: 100%;
     height: $toggler-part-height;
-    vertical-align: middle;
     font-size: 0;
+    vertical-align: middle;
     color: transparent;
     background: $toggler-part-bg-color;
     transition: background $transition-time $transition-time;
@@ -41,16 +48,18 @@
       top: -10px;
     }
 
+
     &:after {
       top: 10px;
     }
   }
 
+
   &--close {
 
-    > span { // stylelint-disable-line  selector-combinator-blacklist
-      transition: background $transition-time 0s;
+    > span {
       background: transparent;
+      transition: background $transition-time 0s;
 
       &:before,
       &:after {
@@ -62,9 +71,19 @@
         transform: rotate3d(0, 0, 1, 45deg);
       }
 
+
       &:after {
         transform: rotate3d(0, 0, 1, -45deg);
       }
     }
   }
 }
+
+
+@media #{$tablet-widths} {
+
+  .burger {
+    display: none;
+  }
+}
+
