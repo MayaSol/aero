@@ -1,2 +1,2 @@
 # aero
-Сделано на основе https://github.com/nicothin/NTH-start-project
+Сделано с помощью https://github.com/nicothin/NTH-start-project
