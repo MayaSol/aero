@@ -8,15 +8,14 @@
 
   $video_tax_condition = '';
   $video_tax_condition = get_query_var('video_tax_condition');
-  write_log('$video_tax_condition: ');
-  write_log($video_tax_condition);
 
   $args = [
     'post_type' => 'aero_video',
-    'post_status' => 'published',
+    'post_status' => 'publish',
     'orderby' => 'menu_order',
     'order' => 'ASC',
-    'tax_query' => [$video_tax_condition]
+    'tax_query' => [$video_tax_condition],
+    'posts_per_page' => -1
     ];
 
 
@@ -26,13 +25,13 @@
   if ($post_name_in !== '') {
 
     $args["post_name__in"] = $post_name_in;
-    //$post_name_in = ["rus-sever-2018"];
 
   }
 
 
 
   $the_query = new WP_Query( $args );
+
 
   if ( $the_query->have_posts() ) :
 
@@ -42,7 +41,7 @@ section.videos
   :php
     $postType = get_post_type_object($args['post_type']);
     $videosTitle = $postType ? $postType->labels->name : '';
-  +or('<h2 class="videos__title"><?php echo $videosTitle ?></h2>')
+  +or('<h2 class="videos__title"><?php echo $videosTitle ?></h2>')(class="videos__title-wrapper")
   .videos__list
     :php
       /* Start the Loop */

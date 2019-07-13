@@ -1,6 +1,6 @@
 //- Все примеси в этом файле должны начинаться c имени блока (site-title)
 
-mixin site-title()
+mixin site-title(classes)
 
-  h1.site-title
+  h1.site-title(class=classes)&attributes(attributes)
     <a class='site-title__link' href = "<?php echo esc_url( home_url( '/' ) ); ?>" rel='home'>  <?php bloginfo( 'name' ); ?> </a>

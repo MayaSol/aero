@@ -1,0 +1,25 @@
+.page-prices {
+  margin-bottom: 20px;
+
+  &__content {
+    .entry-header {
+      @include container;
+    }
+    .entry-content {
+      @include container;
+    }
+  }
+
+  &__example {
+    margin-top: 30px;
+    @media #{$tablet-widths}  {
+      width: 50%;
+      margin-right: auto;
+      margin-left: auto;
+    }
+  }
+  &__example-title {
+    text-align: center;
+  }
+
+}

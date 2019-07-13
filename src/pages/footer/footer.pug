@@ -1,0 +1,35 @@
+include ../../pug/mixins.pug
+
+script(src!="<?= get_bloginfo('stylesheet_directory'); ?>/core.js?v=#{version}")
+
+footer.site-footer
+  .site-footer__inner
+    .site-footer__site-info.site-footer__section
+      span &copy;&nbsp;
+        :php
+           echo date('Y') . '&nbsp;';
+
+      <a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="site-footer__site-link")>
+        :php
+          /* translators: %s: CMS name, i.e. WordPress. */
+          printf( esc_html__( bloginfo('name'), 'aero' ));
+
+      </a>
+
+    .site-footer__socials.socials.site-footer__section
+      +social-menu()
+      //- :php
+      //-   wp_nav_menu( array(
+      //-       'theme_location' => 'social',
+      //-       'menu_id'        => 'social-menu',
+      //-       'menu_class'     => 'social-menu__items',
+      //-       'link_before'    => '<span class="screen-reader-text">',
+      //-       'link_after'     => '</span>'
+      //-   ) );
+
+    .site-footer__copyright.site-footer__section
+      span All demo content is for demonstration purposes only. All images and content Copyright remain with the phpotographer and original authors.
+
+:php wp_footer()
+
+| </body></html>

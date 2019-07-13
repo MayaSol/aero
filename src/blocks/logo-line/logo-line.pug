@@ -1,0 +1,32 @@
+//- Все примеси в этом файле должны начинаться c имени блока (logo-line)
+
+mixin logo-line(text, mods)
+
+  //- Принимает:
+  //-   text    {string} - текст
+  //-   mods    {string} - список модификаторов
+  //- Вызов:
+        +logo-line('Текст', 'some-mod')
+
+  -
+    // список модификаторов
+    var allMods = '';
+    if(typeof(mods) !== 'undefined' && mods) {
+      var modsList = mods.split(',');
+      for (var i = 0; i < modsList.length; i++) {
+        allMods = allMods + ' logo-line--' + modsList[i].trim();
+      }
+    }
+  .logo-line__wrapper
+    .logo-line(class=allMods)&attributes(attributes)
+      .logo-line__inner
+        +site-title('logo-line__site-title')
+        +contact-phone()
+      :php
+        echo aero_custom_logo('logo-line__logo')
+      .logo-line__tagline
+        :php
+          echo aero_tagline('logo-line__tagline')
+    .logo-line__img
+
+

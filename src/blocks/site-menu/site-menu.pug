@@ -1,0 +1,9 @@
+mixin site-menu()
+
+  :php
+    wp_nav_menu( array(
+      'theme_location' => 'main-menu-top',
+      'menu_id'    => 'primary-menu',
+      'menu_class'  => 'main-menu__items',
+      'container' => '')
+    );

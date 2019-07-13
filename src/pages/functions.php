@@ -46,6 +46,7 @@ if ( ! function_exists( 'aero_setup' ) ) :
         // This theme uses wp_nav_menu() in one location.
         register_nav_menus( array(
             'main-menu-top' => esc_html__( 'Main Menu Top', 'aero' ),
+            'social' => esc_html__( 'Socials', 'aero'),
         ) );
 
         /*
@@ -91,13 +92,13 @@ add_action( 'after_setup_theme', 'aero_setup' );
  *
  * @global int $content_width
  */
-function aero_content_width() {
-    // This variable is intended to be overruled from themes.
-    // Open WPCS issue: {@link https://github.com/WordPress-Coding-Standards/WordPress-Coding-Standards/issues/1043}.
-    // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
-    $GLOBALS['content_width'] = apply_filters( 'aero_content_width', 640 );
-}
-add_action( 'after_setup_theme', 'aero_content_width', 0 );
+// function aero_content_width() {
+//     // This variable is intended to be overruled from themes.
+//     // Open WPCS issue: {@link https://github.com/WordPress-Coding-Standards/WordPress-Coding-Standards/issues/1043}.
+//     // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
+//     $GLOBALS['content_width'] = apply_filters( 'aero_content_width', 640 );
+// }
+// add_action( 'after_setup_theme', 'aero_content_width', 0 );
 
 /**
  * Register widget area.
@@ -131,6 +132,11 @@ function aero_scripts() {
 }
 add_action( 'wp_enqueue_scripts', 'aero_scripts' );
 
+
+/** Unchecks the "Crop thumbnail to exact dimensions" checkbox in Settings-Media-Thumbnail (and prevents it from being checked).
+*/
+add_filter( 'pre_option_thumbnail_crop', '__return_zero' );
+
 /**
  * Implement the Custom Header feature.
  */
@@ -163,8 +169,17 @@ require get_template_directory() . '/inc/icon-functions.php';
 /**
 * Custom post types
 */
-require get_template_directory() . '/inc/custom-post-types.php';
+require get_template_directory() . '/inc/custom-types-and-tax.php';
 
+/**
+* Custom options page
+*/
+require get_template_directory() . '/inc/options-page.php';
+
+/**
+* Custom shortcodes
+*/
+require get_template_directory() . '/inc/custom-shortcode.php';
 
 /**
  * Load Jetpack compatibility file.

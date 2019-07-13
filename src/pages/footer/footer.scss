@@ -1,0 +1,44 @@
+.site-footer {
+  background-color: #0e0e0e;
+  padding: 20px 0;
+  color: #6f6f6f;
+
+  &__inner {
+    @include container;
+    display: flex;
+  }
+
+  &__section {
+    display: flex;
+    flex-wrap: wrap;
+    align-content: center;
+  }
+
+  &__site-info {
+    flex-basis: 30%;
+    flex-grow: 1;
+  }
+
+  &__socials {
+    display: flex;
+    flex-basis: 30%;
+    flex-grow: 1;
+  }
+
+  &__copyright {
+    flex-basis: 30%;
+    flex-grow: 1;
+  }
+
+  &__site-link {
+    color: #6f6f6f;
+    text-decoration: none;
+
+    &:visited,
+    &:hover,
+    &:active {
+      color: #6f6f6f;
+      text-decoration: none;
+    }
+  }
+}

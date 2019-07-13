@@ -1,16 +1,32 @@
 .page-about {
+  margin-bottom: 15px;
 
-  .wp-block-image {
+  &__main {
+    @include container;
+  }
+}
+
+@media #{$mobile-widths-only} {
+  .page-about__banner-main {
     display: none;
   }
 }
 
 @media #{$tablet-widths} {
-
   .page-about {
-
-    .wp-block-image {
-      display: block;
+    &__main {
+      display: flex;
+      flex-wrap: wrap;
+    }
+    &__content {
+      flex-basis: 100%;
+    }
+    .tours {
+      flex-basis: 50%;
+    }
+    .videos {
+      flex-basis: 50%;
     }
   }
+
 }

@@ -18,12 +18,8 @@ function aero_include_svg_icons() {
 
 	// If it exists, include it.
 	if ( file_exists( $svg_icons ) ) {
-    write_log('svg_icons_exists');
 		require_once( $svg_icons );
 	}
-  else {
-    write_log('svg_icons_NOT_exists');
-  }
 
 }
 add_action( 'wp_footer', 'aero_include_svg_icons', 9999 );
@@ -144,7 +140,6 @@ function aero_get_svg( $args = array() ) {
 function aero_nav_menu_social_icons( $item_output, $item, $depth, $args ) {
 	// Get supported social icons.
 	$social_icons = aero_social_links_icons();
-
 	// Change SVG icon inside social links menu if there is supported URL.
 	if ( 'social' === $args->theme_location ) {
 		foreach ( $social_icons as $attr => $value ) {

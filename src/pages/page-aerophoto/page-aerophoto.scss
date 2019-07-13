@@ -1,0 +1,50 @@
+.page-aerophoto {
+    @include container;
+
+  .wp-block-image img {
+    padding: 10px;
+    border: 1px solid #dcded9;
+    background-color: #f8f8f8;
+    width: 100%;
+    height: auto;
+  }
+
+  &__main {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  &__content {
+    flex-basis: 100%;
+  }
+
+  &__view-summary {
+    flex-basis: 100%;
+    @media #{$mobile-widths-only} {
+      @include container;
+    }
+    @media #{$tablet-widths} {
+      flex-basis: 50%;
+      padding: 0 15px;
+    }
+  }
+  &__orto-summary {
+    flex-basis: 100%;
+    @media #{$mobile-widths-only} {
+      @include container;
+    }
+    @media #{$tablet-widths} {
+      flex-basis: 50%;
+      padding: 0 15px;
+    }
+  }
+  &__application {
+    @include container;
+    flex-basis: 100%;
+  }
+
+
+
+}
+
+

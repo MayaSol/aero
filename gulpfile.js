@@ -45,6 +45,8 @@ const replace = require('gulp-replace');
 const filter = require('gulp-filter');
 const insert = require('gulp-insert');
 //const gfi = require('gulp-file-insert');
+const child = require('child_process');
+const rsync = require('gulp-rsync');
 
 // Глобальные настройки этого запуска
 const buildLibrary = process.env.BUILD_LIBRARY == 'yes' ? true : false;
@@ -184,15 +186,18 @@ exports.copyAssets = copyAssets;
 
 
 function copyImg(cb) {
+  console.log('copyImg.start');
   let copiedImages = [];
   nth.blocksFromHtml.forEach(function(block) {
     let src = `${dir.blocks}${block}/img`;
     if(fileExist(src)) copiedImages.push(src);
   });
-  nth.config.alwaysAddBlocks.forEach(function(block) {
-    let src = `${dir.blocks}${block}/img`;
-    if(fileExist(src)) copiedImages.push(src);
-  });
+  console.log(copiedImages);
+  // nth.config.alwaysAddBlocks.forEach(function(block) {
+  //   let src = `${dir.blocks}${block}/img`;
+  //   if(fileExist(src)) copiedImages.push(src);
+  // });
+
   if(copiedImages.length) {
     (async () => {
       await cpy(copiedImages, `${dir.build}img`);
@@ -204,6 +209,18 @@ function copyImg(cb) {
   }
 }
 exports.copyImg = copyImg;
+
+function minImg(cb) {
+  return src(`${dir.build}img/*`)
+    .pipe(debug({title: 'minImg: ', showFiles: 'true'}))
+    .pipe(imagemin([
+        imagemin.gifsicle({interlaced: true}),
+        imagemin.jpegtran({progressive: true}),
+        imagemin.optipng({optimizationLevel: 5})
+      ]))
+    .pipe(dest(`${dir.build}img`));
+}
+exports.minImg = minImg;
 
 function copyPhp(cb) {
   for (let item in dir.phpTemplates) {
@@ -285,6 +302,12 @@ function writeSassImportsFile(cb) {
     if (newScssImportsList.indexOf(url) > -1) return;
     newScssImportsList.push(url);
   });
+  let allPagesWithScssFiles = getDirectories('scss','src/pages/');
+  allPagesWithScssFiles.forEach(function(pagesWithScssFile){
+    let url = `src/pages/${pagesWithScssFile}/${pagesWithScssFile}.scss`;
+    if (newScssImportsList.indexOf(url) > -1) return;
+    newScssImportsList.push(url);
+  });
 
   nth.config.addStyleAfter.forEach(function(src) {
     newScssImportsList.push(src);
@@ -322,10 +345,10 @@ function compileSass() {
     }))
     .pipe(debug({title: 'Compiles:'}))
     .pipe(sass({includePaths: [__dirname+'/','node_modules']}))
-    .pipe(postcss(postCssPlugins))
-    .pipe(csso({
-      restructure: false,
-    }))
+    // .pipe(postcss(postCssPlugins))
+    // .pipe(csso({
+    //   restructure: false,
+    // }))
     .pipe(insert.prepend(`/*${styleTitle}\n*/`))
     .pipe(dest(`${dir.build}`, { sourcemaps: '.' }))
     .pipe(browserSync.stream());
@@ -399,6 +422,51 @@ function buildJs() {
 exports.buildJs = buildJs;
 
 
+function i18n(cb) {
+
+  /*Список файлов для переводов */
+  const mkPhpList = child.spawnSync('sh',
+    ['src/tasks/make-php-list.sh'],{
+    cwd: __dirname,
+    encoding: 'utf-8'}
+  );
+
+  console.log(mkPhpList.output);
+
+  const langs = ['ru_RU','en_GB','fr_FR'];
+
+  const phpFilesStr = fs.readFileSync('src/tmp/php-list').toString('utf-8');
+  const phpFiles = phpFilesStr.split('\n');
+
+  //Добавить домены в сообщения, требующие перевода (ф-ции типа __)
+  phpFiles.map(function(fileName) {
+    child.spawnSync('php',
+      ['src/tasks/add-textdomain.php', '-i', 'aero', fileName],
+      {cwd: __dirname,
+      encoding: 'utf-8'}
+    );
+
+  });
+
+
+  //Получить сообщения из 'src/tmp/php-list' и сформировать файлы .po и .mo для всех языков, указанных в langs
+  langs.map(function(fileName){
+
+    let getMsgs = child.spawnSync('sh',
+      ['src/tasks/get-msgs.sh', fileName, 'src/languages/', `${__dirname}/src/tmp/php-list`],
+      {cwd: __dirname,
+      encoding: 'utf-8'}
+    );
+
+    console.log(getMsgs.output);
+
+  });
+
+cb();
+ };
+exports.i18n = i18n;
+
+
 function clearBuildDir() {
   return del([
     `${dir.build}**/*`,
@@ -407,13 +475,13 @@ function clearBuildDir() {
 }
 exports.clearBuildDir = clearBuildDir;
 
-function clearRemote() {
+function clearLocal() {
   return del([
     `${dir.remote}/**`,
     `!${dir.remote}`
   ],{force:true});
 }
-exports.clearRemote = clearRemote;
+exports.clearLocal = clearLocal;
 
 
 function reload(done) {
@@ -426,7 +494,7 @@ function reload(done) {
 // }
 // exports.deploy = deploy;
 
-function deployRemote(cb) {
+function deployLocal(cb) {
   let src = `**/*`;
   console.log(src);
   let dest = `${dir.remote}`;
@@ -434,8 +502,24 @@ function deployRemote(cb) {
   cpy(src, dest,{parents: 'true', cwd: `${dir.build}`});
   cb();
 }
-exports.deployRemote = deployRemote;
+exports.deployLocal = deployLocal;
 
+function deployRemote() {
+  return src(`${dir.build}**`)
+    .pipe(rsync({
+      root: dir.build,
+      hostname: 'illusionsb@77.222.62.180',
+      destination: 'public_html/wp-content/themes/aero/',
+      archive: false,
+      recursive: true,
+      links: true,
+      times: true,
+      silent: true,
+      compress: true
+      //, command: true
+    }));
+}
+exports.deployRemote = deployRemote;
 
 
 function serve() {
@@ -539,7 +623,8 @@ exports.build = series(
   copyPhp,
   parallel(compilePugFast, copyAssets, generateSvgSprite, generatePngSprite),
   parallel(copyImg, writeSassImportsFile, writeJsRequiresFile),
-  parallel(compileSass, buildJs),
+  parallel(minImg, compileSass, buildJs),
+  i18n
 );
 
 
@@ -548,13 +633,14 @@ exports.default = series(
   copyPhp,
   parallel(compilePugFast, copyAssets, generateSvgSprite, generatePngSprite),
   parallel(copyImg, writeSassImportsFile, writeJsRequiresFile),
-  parallel(compileSass, buildJs),
+  parallel(minImg, compileSass, buildJs),
+  i18n,
   serve,
 );
 
-exports.deploy = series(
-  clearRemote,
-  deployRemote,
+exports.deployLocal = series(
+  clearLocal,
+  deployLocal,
 );
 
 

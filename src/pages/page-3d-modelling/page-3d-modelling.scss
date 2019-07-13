@@ -1,0 +1,18 @@
+.page-3d-modelling {
+
+  .wp-block-embed-youtube {
+      @media #{$mobile-widths-only} {
+        margin-right: 0;
+        margin-left: 0;
+      }
+      @media #{$desktop-widths} {
+        width: 50%;
+        margin-left: auto;
+        margin-right: auto;
+      }
+  }
+
+  &__content {
+    @include container;
+  }
+}

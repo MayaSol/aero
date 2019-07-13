@@ -65,15 +65,15 @@ add_action( 'customize_preview_init', 'aero_customize_preview_js' );
  */
 
 function responsive_embed_oembed_html($html, $url, $attr, $post_id) {
-	write_log('responsive_embed_oembed_html--------------------------');
-	write_log('$html: ');
-	write_log($html);
-	write_log('$url');
-	write_log($url);
-	write_log('$attr');
-	write_log($attr);
-	write_log('$post_id');
-	write_log($post_id);
+	// write_log('responsive_embed_oembed_html--------------------------');
+	// write_log('$html: ');
+	// write_log($html);
+	// write_log('$url');
+	// write_log($url);
+	// write_log('$attr');
+	// write_log($attr);
+	// write_log('$post_id');
+	// write_log($post_id);
 
 	return $html;
 }
@@ -84,13 +84,13 @@ function responsive_embed_oembed_html($html, $url, $attr, $post_id) {
 
 
 function get_oembed_result($data, $url, $args) {
-	write_log('get_oembed_result-----------------------');
-	write_log('$data: ');
-	write_log($data);
-	write_log('$url: ');
-	write_log($url);
-	write_log('$args: ');
-	write_log($args);
+	// write_log('get_oembed_result-----------------------');
+	// write_log('$data: ');
+	// write_log($data);
+	// write_log('$url: ');
+	// write_log($url);
+	// write_log('$args: ');
+	// write_log($args);
 	return $data;
 }
 
@@ -102,13 +102,13 @@ function get_oembed_result($data, $url, $args) {
 
 
 function wrap_oembed_dataparse($return, $data, $url) {
-	write_log('get_oembed_dataparse-----------------------');
-	write_log('$data: ');
-	write_log($data);
-	write_log('$url: ');
-	write_log($url);
-	write_log('$return: ');
-	write_log($return);
+	// write_log('get_oembed_dataparse-----------------------');
+	// write_log('$data: ');
+	// write_log($data);
+	// write_log('$url: ');
+	// write_log($url);
+	// write_log('$return: ');
+	// write_log($return);
 
 	$mod = '';
 
@@ -129,19 +129,19 @@ add_filter( 'oembed_dataparse', 'wrap_oembed_dataparse', 99, 4 );
 // Filters 'embed_oembed_discover' and  'oembed_ttl' to clear oEmbed post-meta cache
 // Если 'oembed_dataparse' не срабатывает, то надо однократно очистить oEmbed post-meta cache
 
-// add_filter( 'oembed_ttl', function($ttl) {
-// 	  $GLOBALS['wp_embed']->usecache = 0;
-//             $ttl = 0;
-//             // House-cleanoing
-//             do_action( 'wpse_do_cleanup' );
-// 	return $ttl;
-// });
+add_filter( 'oembed_ttl', function($ttl) {
+	  $GLOBALS['wp_embed']->usecache = 0;
+            $ttl = 0;
+            // House-cleanoing
+            do_action( 'wpse_do_cleanup' );
+	return $ttl;
+});
 
-// add_filter( 'embed_oembed_discover', function( $discover )
-// {
-//     if( 1 === did_action( 'wpse_do_cleanup' ) )
-//         $GLOBALS['wp_embed']->usecache = 1;
-//     return $discover;
-// } );
+add_filter( 'embed_oembed_discover', function( $discover )
+{
+    if( 1 === did_action( 'wpse_do_cleanup' ) )
+        $GLOBALS['wp_embed']->usecache = 1;
+    return $discover;
+} );
 
 

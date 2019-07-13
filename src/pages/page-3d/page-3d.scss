@@ -1,0 +1,22 @@
+.page-3d {
+    @include container;
+
+  .3d-tours-summary {
+    flex-basis: 50%;
+  }
+
+  .3d-modelling-summary {
+    flex-basis: 50%;
+  }
+
+  .tours {
+    flex-basis: 100%;
+  }
+
+  &__main {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+}
+

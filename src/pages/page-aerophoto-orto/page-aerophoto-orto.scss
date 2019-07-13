@@ -1,0 +1,15 @@
+
+.page-aerophoto-orto {
+  @include container;
+
+
+  &__example-img {
+    @include container;
+    margin-bottom: 30px;
+
+    img {
+      max-width: 100%;
+      height: auto;
+    }
+  }
+}

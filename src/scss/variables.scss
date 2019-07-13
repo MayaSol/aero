@@ -1,14 +1,10 @@
-$container-mobile: 260px;
-$container-tablet: 668px;
-$container-desktop: 1050px;
-
 $screen-mobile: 320px;
 $screen-tablet: 768px;
-$screen-desktop: 1150px;
+$screen-desktop: 1250px;
 
 $container-mobile: 280px;
 $container-tablet: 671px;
-$container-desktop: 1100px;
+$container-desktop: 1200px;
 
 $mobile-widths-only: '(max-width: 767px)';
 $tablet-widths: '(min-width: 768px)';
@@ -32,7 +28,13 @@ $gray-lighter:                hsl(0, 0%, 80%);
 $gray-lightest:               hsl(0, 0%, 90%);
 $white:                       hsl(0, 0%, 100%);
 
-$color-main:                  hsl(208, 98%, 43%);
+$lighter-grey: rgb(244, 244, 244);
+$light-grey: rgb(208, 209, 205);
+$grey: rgb(102, 102, 102); //#666666
+$dark-grey: rgb(93, 93, 93);
+$darker-grey: rgb(58, 59, 57);//#3a3b39
+
+$color-main:                  $dark-grey;
 $color-success:               hsl(120, 39%, 54%);
 $color-danger:                hsl(2, 64%, 58%);
 $color-warning:               hsl(35, 84%, 62%);
@@ -48,16 +50,15 @@ $grey: rgb(102, 102, 102); //#666666
 $dark-grey: rgb(93, 93, 93);
 $darker-grey: rgb(58, 59, 57);//#3a3b39
 
+$lighter-blue: #42929d;
 $blue: #1f8086;
-
-// Семантические цвета
 
 $text-color:                  $gray-darkest;
 $text-color-muted:            $gray;
 $body-bg:                     $white;
 
 $link-color:                  $color-main;
-$link-color--hover:           darken($color-main, 15%);
+$link-color--hover:           $blue;
 
 $border-color:                $gray-lighten;
 
@@ -82,7 +83,7 @@ $container-xxl:               $screen-xxl - 30;
 // Модульная сетка
 
 $grid-columns:                12;
-$grid-gutter-width:           30px;
+$grid-gutter-width:           0px;
 
 
 

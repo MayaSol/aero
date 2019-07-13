@@ -1,0 +1,8 @@
+// В этом файле должны быть стили для БЭМ-блока contact-phone, его элементов,
+// модификаторов, псевдоселекторов, псевдоэлементов, @media-условий...
+// Очередность: http://nicothin.github.io/idiomatic-pre-CSS/#priority
+
+.contact-phone {
+
+  $block-name:                &; // #{$block-name}__element
+}

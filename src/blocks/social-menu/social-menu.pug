@@ -1,0 +1,12 @@
+//- Все примеси в этом файле должны начинаться c имени блока (social)
+
+mixin social-menu()
+  :php
+    wp_nav_menu( array(
+        'theme_location' => 'social',
+        'menu_id'        => 'social-menu',
+        'menu_class'     => 'social-menu__items',
+        'link_before'    => '<span class="screen-reader-text">',
+        'link_after'     => '</span>',
+        'container'      => '',
+    ) );

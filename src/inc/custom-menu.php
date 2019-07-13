@@ -3,8 +3,11 @@ function aero_nav_class( $classes, $item, $args ) {
 
 	if ( isset($args->menu_class) ) {
 		$block = explode(' ', $args->menu_class)[0];
-		$block = strstr($block,'__',true);
-	    array_unshift($classes, $block . '__item');
+    $strpos = strpos($block,'__');
+    if ($strpos) {
+      $block = substr($block,0,$strpos);
+    }
+    array_unshift($classes, $block . '__item');
 	}
 
     return $classes;

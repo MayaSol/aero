@@ -1,0 +1,31 @@
+:php
+  /**
+   * Template part for displaying 'Aerophoto Orto Summary' block
+   *
+   * @package aero
+   *
+   */
+
+  $args = [
+    'post_type' => 'page',
+    'post_status' => 'publish',
+    'pagename' => 'aerophoto-orto-summary',
+  ];
+
+  $the_query = new WP_Query( $args );
+
+  if ( $the_query->have_posts() ) :
+
+include ../../pug/mixins.pug
+
+section.page-aerophoto__orto-summary.aerophoto-orto-summary
+  :php
+    /* Start the Loop */
+    while ( $the_query->have_posts() ) : $the_query->the_post();
+  +or('<h2 class="aerophoto-orto-summary__title"><?php the_title() ?></h2>')
+  :php
+    the_content();
+    endwhile;
+|
+|
+<?php endif; ?>

@@ -1,0 +1,41 @@
+.error404 {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  &__site-title {
+    margin-top: 2rem;
+  }
+
+  .site-footer {
+    margin-top: auto;
+  }
+
+  .main-menu__items {
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+    margin-top: 20px;
+    border-top: 5px solid #bbb;
+    padding-top: 10px;
+  }
+
+  &__main {
+    @include container;
+  }
+}
+
+
+@media #{$mobile-widths-only} {
+  .error404 {
+    .main-menu__items {
+      flex-direction: column;
+    }
+    .main-menu__item {
+      flex-basis: 100%;
+    }
+  }
+}
+
+

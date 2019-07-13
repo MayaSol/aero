@@ -10,10 +10,7 @@
 
 |<article id="post-<?php the_ID(); ?>" <?php post_class('tours__item'); ?>>
 
-.tours__preview
-  :php
-    the_content();
-
-    the_title( '<h3 class="tours__caption"><a href="' . esc_url( get_permalink() ) . '" rel="bookmark">', '</a></h3>' );
+:php
+  echo get_virtual_tour_preview();
 
 |</article>

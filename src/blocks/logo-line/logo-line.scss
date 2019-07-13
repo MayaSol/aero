@@ -1,0 +1,96 @@
+// В этом файле должны быть стили для БЭМ-блока logo-line, его элементов,
+// модификаторов, псевдоселекторов, псевдоэлементов, @media-условий...
+// Очередность: http://nicothin.github.io/idiomatic-pre-CSS/#priority
+
+.logo-line {
+
+  $block-name:                &; // #{$block-name}__element
+
+  display: none;
+  position: relative;
+
+  @media #{$tablet-widths} {
+    display: flex;
+    flex-direction: column;
+    min-height: 40px;
+    color: #ffffff;
+    background-repeat: repeat;
+    background-color: #242424;
+  }
+
+  &__wrapper {
+    @media #{$tablet-widths} {
+      padding-top: 115px;
+      background-color: #bdbdbd;
+      background-image: url('img/topstripe.png');
+      background-repeat: repeat;
+      background-position: left top;
+      background-size: auto;
+    }
+  }
+
+  &__img {
+    height: 0;
+    @media #{$tablet-widths} {
+      height: 430px;
+      background-image: url('img/logo-line-bg.jpg');
+      background-repeat: no-repeat;
+      background-position: center top;
+      background-size: auto 430px;
+    }
+      @media (min-width: 1300px) {
+        background-size: 100%, auto;
+      }
+  }
+
+  &__inner {
+      @include container;
+      display: flex;
+      flex-grow: 1;
+      justify-content: space-between;
+      align-items: center;
+  }
+
+  &__logo {
+    position: absolute;
+    width: 249px;
+    height: 250px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+  }
+
+  &__tagline {
+    position: absolute;
+    left: calc( 38% - 150px );
+    top: 270px;
+    font-family: $font-family--headings;
+    font-weight: 400;
+    line-height: 1;
+    text-transform: uppercase;
+    span {
+      display: block;
+    }
+    &--0 {
+      font-size: rem(36px);
+      color: #ffffff;
+    }
+    &--1 {
+      font-size: rem(64px);
+      color: $lighter-blue;
+    }
+  }
+
+  .site-title {
+    margin: 0;
+    font-family: $font-family--headings;
+    font-weight: 400;
+    width: calc(50% - (250px / 2)); //50% of parent block minus site logo half width
+  }
+
+  .contact-phone {
+    font-size: 2.6rem;
+    font-weight: 400;
+  }
+
+}

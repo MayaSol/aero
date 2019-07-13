@@ -21,12 +21,12 @@ $grid-gutter-width:           30px !default;
 //------------------------------------------------------------------------------
 
 @mixin container (
-  $xs-grid-gutter:  $grid-gutter-width,
-  $sm-grid-gutter:  $grid-gutter-width,
-  $md-grid-gutter:  $grid-gutter-width,
-  $lg-grid-gutter:  $grid-gutter-width,
-  $xl-grid-gutter:  $grid-gutter-width,
-  $xxl-grid-gutter: $grid-gutter-width
+  $xs-grid-gutter:  20px,
+  $sm-grid-gutter:  20px,
+  $md-grid-gutter:  20px,
+  $lg-grid-gutter:  30px,
+  $xl-grid-gutter:  30px,
+  $xxl-grid-gutter: 30px
 ) {
   display: block;
   width: 100%;

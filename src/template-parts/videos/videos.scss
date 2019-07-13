@@ -3,4 +3,17 @@
   &__title {
     @include section__title;
   }
+  &__caption {
+    text-align: center;
+
+    a {
+      color: $dark-grey;
+      text-decoration: none;
+      &:hover,
+      &:active,
+      &:focus {
+        color: $blue;
+      }
+    }
+  }
 }
